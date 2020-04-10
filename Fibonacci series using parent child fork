@@ -1,0 +1,44 @@
+#include<stdio.h>
+#include<unistd.h>
+#include<sys/types.h>
+
+int main()
+{
+int  first=0, second=1, third, r, input;
+pid_t pid;
+printf(“Kindly enter the number of a fibonacci sequence”);
+scanf(“%d”,input);
+if (input<0)
+  {
+printf(“can’t  find Fibonacci series for a negative number, kindly enter a positive number”);
+}
+else
+{
+pid = fork();
+if(pid < 0)
+{
+Printf(“fork did not work”);
+}
+
+else if (pid == 0)
+{
+printf(“the child fork is generating fibonacci series”);
+printf(“%d  %d”,first,second);
+for(r=0;r<input;r++)
+{
+third = first+second;
+printf(“%d “,third);
+first=second;
+second=third;
+}
+printf(“the child fork has completed”);
+}
+else
+{
+printf(“the parent is waiting for the completion of the child fork”);
+wait(NULL);
+printf(“parent has ended”);
+}
+}
+return 0;
+}  
